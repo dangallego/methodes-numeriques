@@ -34,13 +34,22 @@ parser = argparse.ArgumentParser(
                     epilog='Text at the bottom of help')
 
 parser.add_argument('-x', '--distance', type = float,  # option that takes a distance, must be a float
-                    action='store', default = 10)  
+                    action='store', help='Must enter the distance as a float/decimal. If no distance indicated \
+                    in command line as argument, program will ask for user input.')  #added help value
 parser.add_argument('-v', '--velocity', type = float,  # option that takes a velocity
-                    action='store', default = 0.99) # default value set to very fast (99% speed of light)  
+                    action='store', help='Must enter speed of spaceship as a fraction of the speed of light \
+                        If no velocity is indicated in command line, program will ask for user input.') # default value set to very fast (99% speed of light)  
 
 args = parser.parse_args()
 #print(args.velocity, args.distance)
-print(time_dilation_calculator(args.distance, args.velocity))
+
+# conditional statement to ask user for their input if optional arguments not passed in command line
+if args.distance is None or args.velocity is None: 
+    x = float(input("Enter the distance from Earth to the planet of travel \n"))
+    v = float(input("Enter the speed of the spaceship, as a fraction of the speed of light \n"))
+    print(time_dilation_calculator(x,v))
+else: 
+    print(time_dilation_calculator(args.distance, args.velocity))
 
 
 

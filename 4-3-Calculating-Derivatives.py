@@ -17,6 +17,9 @@ On the computer we can't actually take the limit as δ goes to zero, but we can 
 # part a
 import numpy as np
 import matplotlib.pyplot as plt
+import time 
+
+start = time.time()
 
 def funct(x):
     return x*(x-1)
@@ -34,9 +37,16 @@ def derivatives(delta, x=1):
 delta_arr = np.array((1e-4, 1e-6, 1e-8, 1e-10, 1e-12, 1e-14))
 derivs = derivatives(delta_arr)
 
-print(derivs)
+end = time.time()
+
+print(derivs, "\n")
+print(f"Program took :{end-start:.2e} seconds to run", "\n")
 
 #plot 
-plt.scatter(derivs, delta_arr) ; plt.axvline(x = 1, c='k') ; plt.gca().invert_yaxis() ; plt.ylabel('$\delta$') ; plt.xlabel('Calculated Derivative')
-#plt.scatter(delta_arr, derivs) ; plt.axhline(y=1,c='k') ; plt.gca().invert_xaxis() ; plt.xlabel('$\delta$') ; plt.ylabel('Calculated Derivative')
+#plt.scatter(derivs, delta_arr) ; plt.axvline(x = 1, c='k', label='Actual Derivative') ; plt.gca().invert_yaxis() ; plt.ylabel('$\delta$') ; plt.xlabel('Calculated Derivative')
+#plt.scatter(delta_arr, derivs) ; plt.axhline(y=1,c='k', label='Actual Derivative') ; plt.gca().invert_xaxis() ; plt.xlabel('$\delta$') ; plt.ylabel('Calculated Derivative')
+
+#LOG 
+plt.scatter(np.log(delta_arr), derivs) ; plt.axhline(y=1,c='k', label='Actual Derivative') ; plt.gca().invert_xaxis() ; plt.xlabel('log($\delta$)') ; plt.ylabel('Calculated Derivative')
+plt.legend()
 plt.show()

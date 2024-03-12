@@ -65,8 +65,8 @@ def electric_contour(xarr, yarr, electric_potentials):
     plt.title('Contour Plot of Electric Potential')
     plt.show()
 
-# prints contour plot of electric potentials for q1 and q2
-electric_contour(xarr, yarr, e_potentials)
+#### shows contour plot of electric potentials for q1 and q2
+#electric_contour(xarr, yarr, e_potentials)
 
 # PART 2 Calculate partial derivatives of potential w.r.t. x and y (the E-field in xy plane)
 # d/dx = f(x+h/2, y) - f(x-h/2,y)
@@ -74,18 +74,55 @@ electric_contour(xarr, yarr, e_potentials)
 # in layman terms need to get value of function (Potential) above and below each point where we want to calculate derivative [f(x+h) - f(x-h) / h] 
 #   where h is the step size (here it is a step size of 1 for the grid since we are going by 1 cm)
 
-# Compute the shape of the original array
+
+# Assuming electric_potential is your 100x100 array of potential values
+
+# partial derivs w.r.t x
+ddx = np.zeros_like(e_potentials)
+for i in range(e_potentials.shape[0]):
+    ddx[i, :-1] = (e_potentials[i, 1:] - e_potentials[i, :-1])
+
+# partial derivs w.r.t y
+ddy = np.zeros_like(e_potentials)
+for j in range(e_potentials.shape[1]):
+    ddy[:-1, j] = (e_potentials[1:, j] - e_potentials[:-1, j])
+
+print(ddx.shape)
+
+# Generate grid of points
+x = np.arange(100)
+y = np.arange(100)
+X, Y = np.meshgrid(x, y)
+
+# Create quiver plot for both partial derivative values
+plt.quiver(X, Y, ddx, ddy)
+plt.xlabel('X')
+plt.ylabel('Y')
+plt.title('E-field (partial derivatives of x and y)')
+plt.axis('equal')
+
+plt.show()
+
+
+
+
+
+'''
+# shape of electric potentials
 original_shape = e_potentials.shape
 
-# Initialize array to store the partial derivative values
-ddx = np.zeros((original_shape[0], original_shape[1] - 1))
+# array to save partial derivative values
+ddx = np.zeros((original_shape[1], original_shape[1] - 1))
+#ddx = np.zeros((1,99))
 
-# Compute the partial derivative using central difference method
+#print('test ddx shape', ddx.shape)
+
+# find partial derivatives using central difference theorem 
 for i in range(original_shape[0]):
     for j in range(1, original_shape[1] - 1):
-        ddx[i, j-1] = (e_potentials[i, j+1] - e_potentials[i, j-1]) / 2
+        ddx[i, j-1] = (e_potentials[i, j-1] - e_potentials[i, j+1]) - e_potentials[i, j-1]
 
-# Handle the edge cases at the boundaries
+# boundaries
 for i in range(original_shape[0]):
     # Left boundary
     ddx[i, 0] = (e_potentials[i, 1] - e_potentials[i, 0])
@@ -95,15 +132,15 @@ for i in range(original_shape[0]):
 # resulting array 
 #print(ddx)
 
-# Initialize array to store the partial derivative values
-ddy = np.zeros((original_shape[0] - 1, original_shape[1]))
+# array to store the partial derivative values
+ddy = np.zeros((original_shape[0]-1, original_shape[1]))
 
-# Compute the partial derivative using central difference method
+# find the partial derivs using cdm
 for i in range(1, original_shape[0] - 1):
     for j in range(original_shape[1]):
-        ddy[i-1, j] = (e_potentials[i+1, j] - e_potentials[i-1, j]) / 2
+        ddy[i-1, j] = (e_potentials[i-1, j] - e_potentials[i+1, j]) - e_potentials[i-1, j]
 
-# Handle the edge cases at the boundaries
+# accounting for boundaries
 for j in range(original_shape[1]):
     # Top boundary
     ddy[0, j] = (e_potentials[1, j] - e_potentials[0, j])
@@ -115,10 +152,34 @@ for j in range(original_shape[1]):
 print("Shape of ddx:", ddx.shape)
 print("Shape of ddy:", ddy.shape)
 
+
+ddx2 = ddx[1:, :]
+print("Shape of ddx2:", ddx2.shape)
+ddy2 = ddy[:, :-1]
+print("Shape of ddy2:", ddy2.shape)
+
 # Generate grid of points
 x = np.arange(100)
 y = np.arange(100)
 X, Y = np.meshgrid(x, y)
+
+# Create quiver plot for both partial derivative values
+plt.quiver(X, Y, ddx, ddy)
+plt.xlabel('X')
+plt.ylabel('Y')
+plt.title('Partial Derivatives with respect to X and Y')
+plt.axis('equal')
+
+plt.show()
+
+
+
+# Generate grid of points
+x = np.arange(100)
+y = np.arange(100)
+X, Y = np.meshgrid(x, y)
+
+
 
 # Create quiver plot for partial derivative with respect to x
 plt.figure(figsize=(10, 5))  # Adjust figure size as needed
@@ -139,3 +200,15 @@ plt.axis('equal')
 
 plt.tight_layout()  # Adjust layout to prevent overlap
 plt.show()
+
+
+# Create quiver plot for partial derivative with respect to x
+plt.figure(figsize=(10, 5))  # Adjust figure size as needed
+plt.subplot(1, 2, 1)  # Subplot for partial derivative with respect to x
+plt.quiver(X[:-1, :], Y[:-1, :], ddx, ddy)
+plt.xlabel('x')
+plt.ylabel('y')
+plt.title('E-field (x-component)')
+plt.axis('equal')
+#plt.show()
+'''

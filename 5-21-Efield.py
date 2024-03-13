@@ -66,14 +66,16 @@ def electric_contour(xarr, yarr, electric_potentials):
     plt.show()
 
 #### shows contour plot of electric potentials for q1 and q2
-#electric_contour(xarr, yarr, e_potentials)
+print("Plot of electric potentials and WIP of electric field")
+electric_contour(xarr, yarr, e_potentials)
 
-# PART 2 Calculate partial derivatives of potential w.r.t. x and y (the E-field in xy plane)
-# d/dx = f(x+h/2, y) - f(x-h/2,y)
-# d/dy = ...
-# in layman terms need to get value of function (Potential) above and below each point where we want to calculate derivative [f(x+h) - f(x-h) / h] 
-#   where h is the step size (here it is a step size of 1 for the grid since we are going by 1 cm)
-
+'''
+PART 2 Calculate partial derivatives of potential w.r.t. x and y (the E-field in xy plane)
+ d/dx = f(x+h/2, y) - f(x-h/2,y)
+ d/dy = ...
+ in layman terms need to get value of function (Potential) above and below each point where we want to calculate derivative [f(x+h) - f(x-h) / h] 
+    where h is the step size (here it is a step size of 1 for the grid since we are going by 1 cm)
+'''
 
 # Assuming electric_potential is your 100x100 array of potential values
 

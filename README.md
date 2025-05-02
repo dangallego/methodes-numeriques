@@ -24,6 +24,6 @@ This is a flat repo with topic-specific Python files. Most files are self-contai
 
 ## Course Info
 
-The material in this repository was developed as part of a Computational Physics at the New York City College of Technology and continued at the University of Strasbourg. Many of the exercises and projects are based on problems from *Computational Physics* by Thomas Newman. The lid-driven cavity final project and other simulations extend these methods to more advanced scenarios.
+The material in this repository was developed as part of a Computational Physics at the New York City College of Technology and continued at the University of Strasbourg. Many of the exercises and projects are based on problems from *Computational Physics* by Mark Newman. The lid-driven cavity final project and other simulations extend these methods to more advanced scenarios.
 
 
